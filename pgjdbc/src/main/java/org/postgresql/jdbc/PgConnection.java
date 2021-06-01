@@ -933,6 +933,15 @@ public class PgConnection implements BaseConnection {
   }
 
   public void setTransactionIsolation(int level) throws SQLException {
+
+    // (Ori Regev - Begin)
+    // This patch is required because Hibernate re-sets the isolation level when it reuses a
+    // connection from the connection pool
+    if (level == getTransactionIsolation()) {
+      return;
+    }
+    // (Ori Regev - End)
+
     checkClosed();
 
     if (queryExecutor.getTransactionState() != TransactionState.IDLE) {
