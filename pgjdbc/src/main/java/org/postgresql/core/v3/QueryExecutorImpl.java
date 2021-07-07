@@ -291,7 +291,6 @@ public class QueryExecutorImpl extends QueryExecutorBase {
       LOGGER.log(Level.FINEST, "  simple execute, handler={0}, maxRows={1}, fetchSize={2}, flags={3}",
           new Object[]{handler, maxRows, fetchSize, flags});
     }
-
     if (parameters == null) {
       parameters = SimpleQuery.NO_PARAMETERS;
     }
@@ -2312,6 +2311,7 @@ public class QueryExecutorImpl extends QueryExecutorBase {
         }
 
         case 'N': // Notice Response
+          LOGGER.log(Level.FINEST, " <=BE Notice");
           SQLWarning warning = receiveNoticeResponse();
           handler.handleWarning(warning);
           break;
@@ -2369,7 +2369,6 @@ public class QueryExecutorImpl extends QueryExecutorBase {
             }
           }
           endQuery = true;
-
           // Reset the statement name of Parses that failed.
           while (!pendingParseQueue.isEmpty()) {
             SimpleQuery failedQuery = pendingParseQueue.removeFirst();
